@@ -11,6 +11,7 @@ import random
 import sklearn
 from sklearn.model_selection import train_test_split
 
+#load all log files
 lines = []
 files = ['../sim_data/driving_log.csv',
          '../sim_data/driving_log_recovery.csv',
@@ -25,9 +26,10 @@ for file in files:
                 continue
             lines.append(line)
 
-        
+# split data into training set and validation set    
 train_samples, validation_samples = train_test_split(lines) 
 
+# generator for calling data one each time during training/validation
 def generator(samples, batch_size=32):
     num_samples = len(samples)
     while 1:
@@ -39,13 +41,17 @@ def generator(samples, batch_size=32):
             measurements = []    
             for line in batch_sample:
                 measurement = float(line[3])
+                # correction factor for left and right images
                 correction = 0.2 + random.uniform(-0.05,0.05)
+                
                 center = line[0].split("\\")[-1]
                 left   = line[1].split("\\")[-1]
                 right  = line[2].split("\\")[-1]
                 img_center = cv2.imread('../sim_data/IMG/'+center)
                 img_left   = cv2.imread('../sim_data/IMG/'+left)
                 img_right  = cv2.imread('../sim_data/IMG/'+right)
+                
+                # augment picture by flipping it
                 img_flip = np.fliplr(img_center)
                   
                 images.append(img_center)
@@ -62,9 +68,11 @@ def generator(samples, batch_size=32):
             y_train = np.array(measurements)
             yield sklearn.utils.shuffle(X_train, y_train)
 
+#generator for training/validation
 train_generator = generator(train_samples)
 validation_generator = generator(validation_samples)
 
+# model architecture
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Cropping2D, Dropout, Activation
 from keras.layers.convolutional import Convolution2D
@@ -75,8 +83,12 @@ model = Sequential()
 #act = LeakyReLU(alpha=0.05)
 #act = Activation('relu')
 act = ELU(alpha=0.05)
+# normalization
 model.add(Lambda(lambda x: x/255.0 - 0.5, input_shape=(160, 320, 3)))
+# cropping images
 model.add(Cropping2D(cropping=((70,25),(0,0))))
+# 5 CNN layers
+# first layer has L2 regularizer to prevent overfitting
 model.add(Convolution2D(24,5,5,subsample=(2,2),W_regularizer=l2(0.001)))
 model.add(act)
 model.add(Convolution2D(36,5,5,subsample=(2,2)))
@@ -87,6 +99,7 @@ model.add(Convolution2D(64,3,3))
 model.add(act)
 model.add(Convolution2D(64,3,3))
 model.add(act)
+# 4 FC layers with 50% dropout
 model.add(Flatten())
 model.add(Dense(100))
 model.add(Dropout(0.5))
@@ -98,12 +111,13 @@ model.add(Dense(10))
 model.add(Dropout(0.5))
 model.add(act)
 model.add(Dense(1))
+# Mean squared error for loss function, and adam optimizer
 model.compile(loss='mse', optimizer='adam')
 model.fit_generator(train_generator, 
                     samples_per_epoch=len(train_samples)*4,
                     validation_data=validation_generator,
                     nb_val_samples=len(validation_samples)*4, 
                     nb_epoch=5)
-
+# save model
 model.save('model.h5')
 exit()
