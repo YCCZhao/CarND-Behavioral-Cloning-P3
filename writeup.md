@@ -12,9 +12,10 @@ The goals / steps of this project are the following:
 [image1]: ./examples/cnn-architecture-624x890.png "Model Visualization"
 [image2]: ./examples/center_2016_12_01_13_41_26_528.jpg "Center Image"
 [image3]: ./examples/left_2016_12_01_13_41_26_528.jpg "Left Image"
-[image4]: ./examples/right_2016_12_01_13_41_26_528.jng "Right Image"
-[image5]: ./examples/center_2017_07_30_09_09_28_033.jng "Recovery Image"
-[image6]: ./examples/flip_center_2016_12_01_13_41_26_528.jpg "Flipped Image"
+[image4]: ./examples/right_2016_12_01_13_41_26_528.jpg "Right Image"
+[image5]: ./examples/center_2017_07_30_09_09_28_033.jpg "Recovery Image1"
+[image6]: ./examples/center_2017_07_30_09_09_28_934.jpg "Recovery Image2"
+[image7]: ./examples/flip_center_2016_12_01_13_41_26_528.jpg "Flipped Image"
 
 # Write-up
 ---
@@ -170,14 +171,17 @@ model.add(Dense(1)
 ```
 
 Here is a visualization of the architecture.
+
 ![alt text][image1]
 
 ### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+
 ![alt text][image2]
 
 Also use left and right images
+
 ![alt text][image3]
 ![alt text][image4]
 Correction
@@ -189,9 +193,11 @@ measurements.append(measurement-correction)
 ```
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+
 ![alt text][image6]
 
 To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+
 ![alt text][image5]
 
 ```sh
