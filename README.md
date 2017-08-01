@@ -9,7 +9,8 @@ In this project, I used deep neural networks and convolutional neural networks t
 I used the simulator provided to steer a car around a track for data collection. Then I used image data and steering angles to train a neural network and used this model to drive the car autonomously around the track.
 
 **Click to play the video**
-[![Watch the video](https://i.stack.imgur.com/LT3WE.png)](https://youtu.be/v9WoQInQ8eg) 
+
+[![Watch the video](https://img.youtube.com/vi/v9WoQInQ8eg/0.jpg)](https://youtu.be/v9WoQInQ8eg) 
 
 The Project
 ---
