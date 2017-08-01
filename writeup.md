@@ -17,7 +17,6 @@ The goals / steps of this project are the following:
 [image6]: ./examples/flip_center_2016_12_01_13_41_26_528.jpg "Flipped Image"
 
 # Write-up
-**Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.**
 ---
 
 ## Files Submitted & Code Quality
