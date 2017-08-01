@@ -24,9 +24,8 @@ Submission Files:
 * [model.py](./model.py) (script used to create and train the model)
 * [drive.py](./drive.py) (script to drive the car - feel free to modify this file)
 * [model.h5](./model.h5) (a trained Keras model)
-* a report writeup
 * [final_run.mp4](./final_run.mp4) (a video recording of your vehicle driving autonomously around the track for at least one full lap)
-
+* [Write-Up](./writeup.md) 
 
 Dependencies
 ---
